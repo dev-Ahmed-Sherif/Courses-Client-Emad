@@ -6,7 +6,7 @@ import axios from "axios";
 import { setUser } from "../redux/user_reducer";
 import "../styles/Main.css";
 
-export default function Login() {
+export default function Register() {
   // Prevent Browser Back Button
   useEffect(() => {
     function preback() {

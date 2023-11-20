@@ -19,6 +19,7 @@ import AddQuestions from "./pages/add-questions";
 import AcademicSubject from "./pages/AcademicSubject";
 import AcademicYear from "./pages/AcademicYear";
 import QuizzesStudent from "./pages/QuizzesStudent";
+import Register from "./pages/Register";
 
 /** react routes */
 const router = createBrowserRouter([
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login></Login>,
+  },
+  {
+    path: "/register",
+    element: <Register></Register>,
   },
   {
     path: "/dashboard",

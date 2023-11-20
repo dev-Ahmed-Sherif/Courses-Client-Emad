@@ -1,15 +1,16 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/Nav.css";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="Navbar">
-      <span className="nav-logo">DevLHB</span>
+      <span className="nav-logo">كورساتى</span>
       <div className={`nav-items ${isOpen && "open"}`}>
-        <a href="/home">Home</a>
-        <a href="/about">About</a>
-        <a href="/service">Service</a>
-        <a href="/contact">Contact</a>
+        <Link to="/home">الرئيسية</Link>
+        <Link to="/service">الدورات</Link>
+        <Link to="/about">عنا</Link>
+        <Link to="/contact">اتصل بنا</Link>
       </div>
       <div
         className={`nav-toggle ${isOpen && "open"}`}
