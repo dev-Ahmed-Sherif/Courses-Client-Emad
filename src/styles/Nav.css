@@ -5,22 +5,26 @@
   position: sticky;
   display: flex;
   flex-direction: row-reverse;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   background: blue;
 }
 
 .Navbar > .nav-logo {
+  width: 70px;
+  height: 50px;
   font-weight: 700;
-  font-size: 21px;
+  /* font-size: 21px; */
   margin: 15px;
   color: #ffffff;
+  border-radius: 14px;
 }
 
 .Navbar > .nav-items > a {
   text-align: right;
   color: #ffffff;
   font-size: 16px;
+  font-weight: bold;
   text-decoration: none;
   margin: 15px;
   position: relative;
@@ -75,11 +79,12 @@
 
   .Navbar > .nav-toggle {
     display: flex;
-    width: 50px;
+    width: 100%;
     height: 50px;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     cursor: pointer;
+    margin: 14px;
   }
 
   .nav-toggle > .bar {

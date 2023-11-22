@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import axios from "axios";
 import { setUser } from "../redux/user_reducer";
@@ -40,11 +40,11 @@ export default function Login() {
   const inputs = [
     {
       id: "1",
-      name: "username",
-      type: "text",
-      placeholder: "الأسم",
+      name: "email",
+      type: "email",
+      placeholder: "البريد الألكترونى",
       pattern: `^[A-Za-z0-9\\s\u0600-\u06FF]{3,20}$`,
-      errorMsg: "الأسم يجب الإ يقل عن أربعه احرف ولا يحتوى على رموز",
+      errorMsg: "الإيميل غير متوافق",
       required: true,
     },
     {
@@ -118,11 +118,7 @@ export default function Login() {
   return (
     <>
       <div className="container">
-        <p> يرجى مشاهدة الفيديو للتعرف على شكل الامتحان </p>
-        {/* <video width="400" height="400" controls>
-          <source src="./Final.mp4" type="video/mp4" />
-        </video> */}
-        <p> أدخل بياناتك لتسجيل الدخول </p>
+        <img className="nav-logo" src="./logo.jfif" alt="" />
         <form id="form" className="form-grid start" onSubmit={handleSubmit}>
           {inputs.map((input) => (
             <FormInput
@@ -135,11 +131,16 @@ export default function Login() {
           ))}
           <button className="btn">تسجيل الدخول</button>
         </form>
-
+        <div className="reg">
+          <p> لأول مرة هنا </p>
+          <Link to="/register" className="">
+            {" "}
+            إنشاء حساب{" "}
+          </Link>
+        </div>
         {errorMsg !== undefined ? (
           <p style={{ color: "red", fontSize: "2em", fontWeight: "bold" }}>
-            {" "}
-            {errorMsg}{" "}
+            {errorMsg}
           </p>
         ) : (
           <p></p>

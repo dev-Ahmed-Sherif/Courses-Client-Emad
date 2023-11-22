@@ -5,7 +5,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="Navbar">
-      <span className="nav-logo">كورساتى</span>
+      {/* <span className="nav-logo">كورساتى</span> */}
+      <img className="nav-logo" src="./logo.jfif" alt="" />
       <div className={`nav-items ${isOpen && "open"}`}>
         <Link to="/home">الرئيسية</Link>
         <Link to="/service">الدورات</Link>

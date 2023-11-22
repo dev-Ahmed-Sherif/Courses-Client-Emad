@@ -9,7 +9,7 @@ function FormInput({ className, onChange, errorMsg, id, ...inputProps }) {
   };
 
   return (
-    <div>
+    <div className="input">
       <input
         className={className}
         {...inputProps}

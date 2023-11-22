@@ -20,7 +20,7 @@ function AuthNav() {
         </button>
         <button
           onClick={() => {
-            navigate(LOGIN_PAGE);
+            navigate(REGISTER_PAGE);
           }}
         >
           {" "}

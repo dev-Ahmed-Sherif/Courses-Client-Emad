@@ -1,3 +1,11 @@
 input:invalid[focused="true"] ~ span {
   display: block;
+  color: red;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

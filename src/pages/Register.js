@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import FormInput from "../components/FormInput";
-import axios from "axios";
 import { setUser } from "../redux/user_reducer";
+
+import FormInput from "../components/FormInput";
+
 import "../styles/Main.css";
 
 export default function Register() {
@@ -43,15 +45,42 @@ export default function Register() {
       name: "username",
       type: "text",
       placeholder: "الأسم",
-      pattern: `^[A-Za-z0-9\\s\u0600-\u06FF]{3,20}$`,
+      pattern: `^[A-Za-z\\s\u0600-\u06FF]{3,20}$`,
       errorMsg: "الأسم يجب الإ يقل عن أربعه احرف ولا يحتوى على رموز",
       required: true,
     },
     {
       id: "2",
+      name: "phone",
+      type: "text",
+      placeholder: "رقم الهاتف",
+      pattern: `^[0-9]{3,20}$`,
+      errorMsg: "رقم الهاتف لا يجب ان يحتوى على احرف",
+      required: true,
+    },
+    {
+      id: "3",
+      name: "email",
+      type: "email",
+      placeholder: "البريد الألكترونى",
+      pattern: `^[A-Za-z0-9\u0600-\u06FF]{3,20}$`,
+      errorMsg: "الإيميل غير متوافق",
+      required: true,
+    },
+    {
+      id: "4",
       name: "password",
       type: "password",
       placeholder: "كلمة المرور",
+      pattern: `^[A-Za-z0-9\u0600-\u06FF]{3,20}$`,
+      errorMsg: "الباسورد لايجب ان يحتوى على رموز",
+      required: true,
+    },
+    {
+      id: "5",
+      name: "password",
+      type: "password",
+      placeholder: "تاكيد كلمة المرور",
       pattern: `^[A-Za-z0-9\u0600-\u06FF]{3,20}$`,
       errorMsg: "الباسورد لايجب ان يحتوى على رموز",
       required: true,
@@ -118,11 +147,7 @@ export default function Register() {
   return (
     <>
       <div className="container">
-        <p> يرجى مشاهدة الفيديو للتعرف على شكل الامتحان </p>
-        {/* <video width="400" height="400" controls>
-          <source src="./Final.mp4" type="video/mp4" />
-        </video> */}
-        <p> أدخل بياناتك لتسجيل الدخول </p>
+        <img className="nav-logo" src="./logo.jfif" alt="" />
         <form id="form" className="form-grid start" onSubmit={handleSubmit}>
           {inputs.map((input) => (
             <FormInput
@@ -133,13 +158,12 @@ export default function Register() {
               onChange={onChange}
             />
           ))}
-          <button className="btn">تسجيل الدخول</button>
+          <button className="btn"> إنشاء حساب </button>
         </form>
 
         {errorMsg !== undefined ? (
           <p style={{ color: "red", fontSize: "2em", fontWeight: "bold" }}>
-            {" "}
-            {errorMsg}{" "}
+            {errorMsg}
           </p>
         ) : (
           <p></p>

@@ -1,18 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Stack, Button } from "@mui/material";
 
 import Navbar from "../components/Navbar";
 import AuthNav from "../components/AuthNav";
-
-import "../styles/Main.css";
 import HeroSection from "../components/HeroSection";
 
+import "../styles/Main.css";
+
 function Main() {
-  const LOGIN_PAGE = "/login";
-
-  const navigate = useNavigate();
-
   return (
     <>
       <AuthNav />
