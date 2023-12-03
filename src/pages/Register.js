@@ -7,7 +7,6 @@ import { setUser } from "../redux/user_reducer";
 
 import FormInput from "../components/FormInput";
 import Navbar from "../components/Navbar";
-import ResponsiveAppBar from "../components/NavbarMui";
 
 import "../styles/Main.css";
 
@@ -134,6 +133,7 @@ export default function Register() {
         // console.log(role);
         if (role !== undefined) {
           navigate(homePage);
+          dispatch(setUser(res.data.user));
         }
       } catch (error) {
         console.log(error);
@@ -144,7 +144,6 @@ export default function Register() {
   return (
     <>
       <Navbar />
-      <ResponsiveAppBar />
       <div className="container">
         <img className="nav-logo" src="./logo.jfif" alt="" />
         {/* <form

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Nav.css";
 
@@ -17,15 +17,23 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
 const pages = ["عنا", "تواصل معنا", "الدورات", "الرئيسية"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["الصفحة الشخصية", "Account", "Dashboard", "تسجيل الخروج"];
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [visable, setIsVisable] = useState("hidden");
+
+  useEffect(() => {
+    if (user) {
+      setIsVisable("visible");
+    }
+  }, []);
 
   const navigate = useNavigate();
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -69,14 +77,36 @@ const Navbar = () => {
       <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Box sx={{ flexGrow: 0 }}>
+            <Box
+              sx={{
+                flexGrow: 0,
+                visibility: visable,
+              }}
+            >
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Typography
+                    sx={{
+                      fontWeight: "bold",
+                      display: { xs: "none", md: "flex" },
+                      width: "max-content",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: "white",
+                    }}
+                  >
+                    مرحبا {user}
+                  </Typography>
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: "45px" }}
+                className="menu"
+                sx={{
+                  mt: "45px",
+                  // display: "flex",
+                  // flexDirection: "column"
+                }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
@@ -92,7 +122,17 @@ const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    className="profile"
+                    key={setting}
+                    sx={
+                      {
+                        // width: "150px",
+                        // height: "50px",
+                      }
+                    }
+                    onClick={handleCloseUserMenu}
+                  >
                     <Typography textAlign="center">{setting}</Typography>
                   </MenuItem>
                 ))}
@@ -165,8 +205,20 @@ const Navbar = () => {
                 }}
               >
                 {pages.reverse().map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <MenuItem
+                    sx={
+                      {
+                        // width: "50px",
+                        // height: "50px",
+                        // display: { xs: "flex", md: "none" },
+                      }
+                    }
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                  >
+                    <Typography textAlign="center" sx={{ fontWeight: "bold" }}>
+                      {page}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -207,7 +259,12 @@ const Navbar = () => {
                   <Button
                     key={page}
                     onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      fontWeight: "bold",
+                    }}
                   >
                     {page}
                   </Button>

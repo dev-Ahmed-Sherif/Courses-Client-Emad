@@ -140,3 +140,13 @@
     transform: rotate(-45deg) translate(26px, 26px);
   }
 }
+
+.profile {
+  width: 150px !important;
+  height: 50px !important;
+}
+
+.menu {
+  display: "flex !important";
+  flex-direction: "column !important";
+}

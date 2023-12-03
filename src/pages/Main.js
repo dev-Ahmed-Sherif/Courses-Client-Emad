@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import Navbar from "../components/Navbar";
 import AuthNav from "../components/AuthNav";
@@ -7,10 +8,13 @@ import HeroSection from "../components/HeroSection";
 import "../styles/Main.css";
 
 function Main() {
+  const user = useSelector((state) => state.user);
+  console.log(user);
+
   return (
     <>
-      <AuthNav />
-      <Navbar />
+      <AuthNav user={user.userId} />
+      <Navbar user={user.userName} />
       <HeroSection />
       {/* <Stack className="container">
         <img src="./logo.jpeg" alt="" />
