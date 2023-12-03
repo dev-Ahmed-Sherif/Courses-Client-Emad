@@ -12,8 +12,8 @@
 }
 
 .con .left img {
-  width: 400px;
-  height: 400px;
+  width: 21rem;
+  height: 21rem;
   border-radius: 14px;
   -webkit-border-radius: 14px;
   -moz-border-radius: 14px;
@@ -22,7 +22,7 @@
 }
 
 .con .right {
-  width: 600px;
+  width: 35rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,8 +30,8 @@
 }
 
 .con .right p {
-  margin: 14px;
-  font-size: larger;
+  margin: 0.4rem;
+  font-size: 1.4rem;
   font-weight: bolder;
 }
 
@@ -39,4 +39,25 @@
   width: 200px;
   font-size: large;
   font-weight: bolder;
+}
+
+@media (max-width: 1100px) {
+  .con {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .con .left,
+  .con .right {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 550px) {
+  .con .right p {
+    font-size: 0.9rem;
+  }
 }

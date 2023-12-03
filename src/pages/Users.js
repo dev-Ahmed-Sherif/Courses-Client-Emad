@@ -285,7 +285,7 @@ function Users() {
                 {inputs.map((input) => (
                   <FormInput
                     key={input.id}
-                    className="userid"
+                    className="input"
                     {...input}
                     value={values[input.name]}
                     onChange={onChange}

@@ -14,7 +14,7 @@ export default function Result() {
   const dispatch = useDispatch();
   const {
     quiz: { subject, questions, answers, id },
-    user: { result, userId, userName },
+    user: { result, input, userName },
   } = useSelector((state) => state);
 
   const browToken = window.localStorage.getItem("token");
@@ -36,7 +36,7 @@ export default function Result() {
     _id: id,
     quizSubject: subject,
     result,
-    user: userId,
+    user: input,
     quizTotalPoints: totalPoints,
     points: earnPoints,
     achived: flag ? "ناجح" : "راسب",

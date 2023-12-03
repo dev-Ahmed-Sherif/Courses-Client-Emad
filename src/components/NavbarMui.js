@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/Nav.css";
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,16 +15,14 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = ["عنا", "تواصل معنا", "الدورات", "الرئيسية"];
+const pages = ["عنا", "تواصل معنا", "دوراتنا", "الرئيسية"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const navigate = useNavigate();
-
+function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -44,28 +41,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* <div className="Navbar">
-        
-        <img
-          className="nav-logo"
-          src="./logo.jfif"
-          onClick={() => navigate("/")}
-          alt=""
-        />
-        <div className={`nav-items ${isOpen && "open"}`}>
-          <Link to="/">الرئيسية</Link>
-          <Link to="/courses">الدورات</Link>
-          <Link to="/about">عنا</Link>
-          <Link to="/contact">اتصل بنا</Link>
-        </div>
-        <div
-          className={`nav-toggle ${isOpen && "open"}`}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <div className="bar"></div>
-        </div>
-      </div> */}
-
       <AppBar position="sticky">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -99,23 +74,23 @@ const Navbar = () => {
               </Menu>
             </Box>
             {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-        <Typography
-          variant="h6"
-          noWrap
-          component="a"
-          href="#app-bar-with-responsive-menu"
-          sx={{
-            mr: 2,
-            display: { xs: "none", md: "flex" },
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-          }}
-        >
-          LOGO
-        </Typography> */}
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              LOGO
+            </Typography> */}
 
             <Tooltip title="Logo">
               <IconButton
@@ -172,24 +147,24 @@ const Navbar = () => {
               </Menu>
             </Box>
             {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-        <Typography
-          variant="h5"
-          noWrap
-          component="a"
-          href="#app-bar-with-responsive-menu"
-          sx={{
-            mr: 2,
-            display: { xs: "flex", md: "none" },
-            flexGrow: 1,
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-          }}
-        >
-          LOGO
-        </Typography> */}
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "none" },
+                flexGrow: 1,
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              LOGO
+            </Typography> */}
             <Box
               sx={{
                 display: { xs: "none", md: "flex" },
@@ -228,39 +203,38 @@ const Navbar = () => {
             </Box>
 
             {/* <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            sx={{ mt: "45px" }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
-            {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box> */}
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box> */}
           </Toolbar>
         </Container>
       </AppBar>
     </>
   );
-};
-
-export default Navbar;
+}
+export default ResponsiveAppBar;

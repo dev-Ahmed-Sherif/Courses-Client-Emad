@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import FormInput from "../components/FormInput";
-import axios from "axios";
 import { setUser } from "../redux/user_reducer";
+
+import FormInput from "../components/FormInput";
+import Navbar from "./../components/Navbar";
+
 import "../styles/Main.css";
 
 export default function Login() {
@@ -24,18 +28,21 @@ export default function Login() {
     window.localStorage.removeItem("quizzesResult");
   });
 
-  const QUIZ_URI_LOGIN_BACK = "/api/users/login";
-  const QUIZ_URI_HOME = "/quizzes-student";
-  const DASH_URI_HOME = "/users-dashboard";
+  // Back-End
+  const QUIZ_URI_LOGIN_BACK = "/login";
+
+  // Front-End
+  const homePage = "/";
 
   // const userNameRef = useRef(null);
   const navigate = useNavigate();
-  const [values, setValues] = useState({
-    username: "",
-    password: "",
-  });
-  const [errorMsg, setErrorMsg] = useState(undefined);
+
+  const [errorMsg, setErrorMsg] = useState({});
   const dispatch = useDispatch();
+
+  const { register, handleSubmit, formState } = useForm();
+
+  const { errors } = formState;
 
   const inputs = [
     {
@@ -58,15 +65,15 @@ export default function Login() {
     },
   ];
 
-  const handleSubmit = async (e) => {
-    // console.log("clicked");
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+    setErrorMsg({});
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${QUIZ_URI_LOGIN_BACK}`,
         {
-          name: values.username,
-          password: values.password,
+          email: email,
+          pwd: password,
         },
         {
           headers: { "Content-Type": "application/json" },
@@ -76,75 +83,115 @@ export default function Login() {
       console.log(res);
 
       // Check res Message
-      if (res.data.message) {
-        setErrorMsg(res.data.message);
+      if (res.data.messageEmail) {
+        setErrorMsg({ msgBackEmail: res.data.messageEmail });
+      } else if (res.data.messagePass) {
+        setErrorMsg({ msgBackPass: res.data.messagePass });
       }
 
       // Set Token In LocalStorage
 
-      window.localStorage.setItem("token", JSON.stringify(res.data.token));
+      // window.localStorage.setItem("token", JSON.stringify(res.data));
 
       // Check User Role
-      const role = res.data.user.role;
+      const role = res.data.roles;
       // console.log(role);
 
-      if (role === "admin") {
+      if (role[0] === 777) {
         dispatch(setUser(res.data.user));
         window.localStorage.setItem("Name", JSON.stringify(res.data.user.name));
-        navigate(DASH_URI_HOME);
-      } else if (role === "student") {
-        dispatch(setUser(res.data.user));
-        window.localStorage.setItem("id", JSON.stringify(res.data.user._id));
-        window.localStorage.setItem("Name", JSON.stringify(res.data.user.name));
+        navigate();
+      } else if (role[0] === 7 || role[0] === 77) {
+        dispatch(setUser(res.data.foundUser));
         window.localStorage.setItem(
-          "academicYear",
-          JSON.stringify(res.data.user._id)
+          "id",
+          JSON.stringify(res.data.foundUser._id)
         );
         window.localStorage.setItem(
-          "quizzesResult",
-          JSON.stringify(res.data.user.result)
+          "Name",
+          JSON.stringify(res.data.foundUser.name)
         );
-        window.localStorage.setItem("result", JSON.stringify([]));
-        navigate(QUIZ_URI_HOME);
+        navigate(homePage);
       }
     } catch (error) {}
   };
 
-  const onChange = (e) => {
-    // console.log(e.target);
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
   return (
     <>
+      <Navbar />
       <div className="container">
         <img className="nav-logo" src="./logo.jfif" alt="" />
-        <form id="form" className="form-grid start" onSubmit={handleSubmit}>
-          {inputs.map((input) => (
+        <form
+          id="form"
+          className="form-grid start"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          {/* {inputs.map((input) => (
             <FormInput
               key={input.id}
-              className="userid"
+              className="input"
               {...input}
               value={values[input.name]}
               onChange={onChange}
             />
-          ))}
-          <button className="btn">تسجيل الدخول</button>
+          ))} */}
+          <input
+            id="email"
+            className="input"
+            type="email"
+            placeholder="الإيميل"
+            {...register("email", {
+              required: {
+                value: true,
+                message: "هذا الحقل مطلوب",
+              },
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "الإيميل غير متوافق",
+              },
+            })}
+          />
+          <p>
+            {errorMsg?.msgBackEmail !== undefined
+              ? errorMsg?.msgBackEmail
+              : errors.email?.message}
+          </p>
+          <input
+            id="password"
+            className="input"
+            type="password"
+            placeholder="كلمة المرور"
+            {...register("password", {
+              required: {
+                value: true,
+                message: "هذا الحقل مطلوب",
+              },
+              minLength: {
+                value: 6,
+                message: "الباسورد لا يقل عن ستة احرف او ارقام",
+              },
+            })}
+          />
+          <p>
+            {errorMsg?.msgBackPass !== undefined
+              ? errorMsg?.msgBackPass
+              : errors.email?.message}
+          </p>
+          <button type="submit" className="btn">
+            تسجيل الدخول
+          </button>
         </form>
-        <div className="reg">
-          <p> لأول مرة هنا </p>
-          <Link to="/register" className="">
-            {" "}
-            إنشاء حساب{" "}
-          </Link>
+        <div className="footer-auth">
+          لأول مرة هنا؟
+          <Link to="/register"> إنشاء حساب </Link>
         </div>
-        {errorMsg !== undefined ? (
+        {/* {errorMsg !== undefined ? (
           <p style={{ color: "red", fontSize: "2em", fontWeight: "bold" }}>
             {errorMsg}
           </p>
         ) : (
           <p></p>
-        )}
+        )} */}
       </div>
     </>
   );
