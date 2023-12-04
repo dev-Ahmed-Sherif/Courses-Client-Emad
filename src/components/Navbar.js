@@ -17,7 +17,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
 const pages = ["عنا", "تواصل معنا", "الدورات", "الرئيسية"];
-const settings = ["الصفحة الشخصية", "Account", "Dashboard", "تسجيل الخروج"];
+const settings = ["الصفحة الشخصية", "Account", "Dashboard"];
 
 const Navbar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -84,8 +84,16 @@ const Navbar = ({ user }) => {
               }}
             >
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  sx={{
+                    width: "120px",
+                    p: 0,
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Avatar alt={user} src="./person.JPG" />
                   <Typography
                     sx={{
                       fontWeight: "bold",
@@ -104,6 +112,7 @@ const Navbar = ({ user }) => {
                 className="menu"
                 sx={{
                   mt: "45px",
+
                   // display: "flex",
                   // flexDirection: "column"
                 }}
@@ -125,17 +134,40 @@ const Navbar = ({ user }) => {
                   <MenuItem
                     className="profile"
                     key={setting}
-                    sx={
-                      {
-                        // width: "150px",
-                        // height: "50px",
-                      }
-                    }
+                    sx={{
+                      justifyContent: "center",
+                      // width: "150px",
+                      height: "50px",
+                    }}
                     onClick={handleCloseUserMenu}
                   >
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Typography
+                      sx={{ color: "blue", fontWeight: "bold" }}
+                      textAlign="center"
+                    >
+                      {setting}
+                    </Typography>
                   </MenuItem>
                 ))}
+                <IconButton
+                  sx={{
+                    width: "100%",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      p: "5px",
+                      color: "blue",
+                      fontSize: "21px",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      border: "solid blue 2px",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    تسجيل الخروج
+                  </Typography>
+                </IconButton>
               </Menu>
             </Box>
             {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -173,6 +205,8 @@ const Navbar = ({ user }) => {
             <Box
               sx={{
                 //flexGrow: 1,
+                left: "0 !important",
+                right: "100px",
                 display: { xs: "flex", md: "none" },
               }}
             >
@@ -202,6 +236,7 @@ const Navbar = ({ user }) => {
                 onClose={handleCloseNavMenu}
                 sx={{
                   display: { xs: "block", md: "none" },
+                  direction: "rtl",
                 }}
               >
                 {pages.reverse().map((page) => (
@@ -216,7 +251,10 @@ const Navbar = ({ user }) => {
                     key={page}
                     onClick={handleCloseNavMenu}
                   >
-                    <Typography textAlign="center" sx={{ fontWeight: "bold" }}>
+                    <Typography
+                      textAlign="center"
+                      sx={{ color: "blue", fontWeight: "bold" }}
+                    >
                       {page}
                     </Typography>
                   </MenuItem>

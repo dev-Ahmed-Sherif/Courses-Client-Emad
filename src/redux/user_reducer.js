@@ -8,7 +8,7 @@ export const userReducer = createSlice({
       : "",
     userName: JSON.parse(window.localStorage.getItem("Name"))
       ? JSON.parse(window.localStorage.getItem("Name"))
-      : "احمد",
+      : "احمد شريف",
     academicYear: JSON.parse(window.localStorage.getItem("academicYear"))
       ? JSON.parse(window.localStorage.getItem("academicYear"))
       : "",
