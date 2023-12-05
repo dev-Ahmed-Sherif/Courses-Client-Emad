@@ -9,6 +9,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -81,18 +83,29 @@ const Navbar = ({ user }) => {
               sx={{
                 flexGrow: 0,
                 visibility: visable,
+                display: "flex",
               }}
             >
-              <Tooltip title="Open settings">
+              <IconButton
+                sx={{ color: "white" }}
+                aria-label="add to shopping cart"
+              >
+                <AddShoppingCartIcon fontSize="large" />
+              </IconButton>
+              <Tooltip title="الصفحة الشخصية">
                 <IconButton
                   onClick={handleOpenUserMenu}
                   sx={{
-                    width: "120px",
-                    p: 0,
+                    width: "75%",
+                    height: "50px",
+                    p: 1,
                     display: "flex",
                     justifyContent: "space-between",
+                    border: "solid 2px white",
+                    borderRadius: "14px",
                   }}
                 >
+                  <ExpandMoreIcon sx={{ color: "white" }} />
                   <Avatar alt={user} src="./person.JPG" />
                   <Typography
                     sx={{
@@ -253,7 +266,10 @@ const Navbar = ({ user }) => {
                   >
                     <Typography
                       textAlign="center"
-                      sx={{ color: "blue", fontWeight: "bold" }}
+                      sx={{
+                        color: "blue",
+                        fontWeight: "bold",
+                      }}
                     >
                       {page}
                     </Typography>
@@ -302,6 +318,7 @@ const Navbar = ({ user }) => {
                       color: "white",
                       display: "block",
                       fontWeight: "bold",
+                      fontSize: "large",
                     }}
                   >
                     {page}
