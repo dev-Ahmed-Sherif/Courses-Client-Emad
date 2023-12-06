@@ -18,8 +18,17 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = ["عنا", "تواصل معنا", "الدورات", "الرئيسية"];
-const settings = ["الصفحة الشخصية", "Account", "Dashboard"];
+const pages = [
+  { name: "عنا", link: "/" },
+  { name: "تواصل معنا", link: "/" },
+  { name: "الدورات", link: "/" },
+  { name: "الرئيسية", link: "/" },
+];
+const settings = [
+  { name: "الصفحة الشخصية", link: "/" },
+  { name: "Account", link: "/" },
+  { name: "Dashboard", link: "/" },
+];
 
 const Navbar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,12 +53,14 @@ const Navbar = ({ user }) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
+    navigate(page);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (page) => {
     setAnchorElUser(null);
+    navigate(page);
   };
 
   return (
@@ -141,24 +152,24 @@ const Navbar = ({ user }) => {
                   horizontal: "right",
                 }}
                 open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
+                onClose={() => handleCloseUserMenu("/")}
               >
                 {settings.map((setting) => (
                   <MenuItem
                     className="profile"
-                    key={setting}
+                    key={setting.name}
                     sx={{
                       justifyContent: "center",
                       // width: "150px",
                       height: "50px",
                     }}
-                    onClick={handleCloseUserMenu}
+                    onClick={() => handleCloseUserMenu(setting.link)}
                   >
                     <Typography
                       sx={{ color: "blue", fontWeight: "bold" }}
                       textAlign="center"
                     >
-                      {setting}
+                      {setting.name}
                     </Typography>
                   </MenuItem>
                 ))}
@@ -261,8 +272,8 @@ const Navbar = ({ user }) => {
                         // display: { xs: "flex", md: "none" },
                       }
                     }
-                    key={page}
-                    onClick={handleCloseNavMenu}
+                    key={page.name}
+                    onClick={() => handleCloseNavMenu(page.link)}
                   >
                     <Typography
                       textAlign="center"
@@ -271,7 +282,7 @@ const Navbar = ({ user }) => {
                         fontWeight: "bold",
                       }}
                     >
-                      {page}
+                      {page.name}
                     </Typography>
                   </MenuItem>
                 ))}
@@ -311,8 +322,8 @@ const Navbar = ({ user }) => {
               >
                 {pages.reverse().map((page) => (
                   <Button
-                    key={page}
-                    onClick={handleCloseNavMenu}
+                    key={page.name}
+                    onClick={() => handleCloseNavMenu(page.link)}
                     sx={{
                       my: 2,
                       color: "white",
@@ -321,7 +332,7 @@ const Navbar = ({ user }) => {
                       fontSize: "large",
                     }}
                   >
-                    {page}
+                    {page.name}
                   </Button>
                 ))}
               </Box>
