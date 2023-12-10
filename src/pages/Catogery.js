@@ -10,7 +10,7 @@ import Topbar from "../components/Topbar";
 import Sidebar from "../components/Sidebar";
 import SearchItem from "../components/SearchItem";
 import AddItem from "../components/AddItem";
-import DataTable from "./../components/DataTable";
+import DataTable from "../components/DataTable";
 
 const pattern = `^[A-Za-z\u0600-\u06FF\\s]{3,30}$`;
 
@@ -167,8 +167,8 @@ function AcademicYear() {
           <div className="operations">
             <div className="add-item">
               <AddItem
-                label={"إضافة العام الدراسى"}
-                placeholder={"العام الدراسى"}
+                label={"إضافة مجال"}
+                placeholder={"المجال التدريبى"}
                 pattern={pattern}
                 newItem={newItem}
                 setNewItem={setNewItem}

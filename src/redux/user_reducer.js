@@ -8,7 +8,7 @@ export const userReducer = createSlice({
       : "",
     userName: JSON.parse(window.localStorage.getItem("Name"))
       ? JSON.parse(window.localStorage.getItem("Name"))
-      : "احمد شريف",
+      : "",
     academicYear: JSON.parse(window.localStorage.getItem("academicYear"))
       ? JSON.parse(window.localStorage.getItem("academicYear"))
       : "",
@@ -21,7 +21,7 @@ export const userReducer = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
-      // console.log(action.payload);
+      console.log(action.payload);
       // console.log(state.userId);
       // console.log(state.userName);
       state.userId = action.payload._id;

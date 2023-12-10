@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/user_reducer";
+
 import "../styles/Nav.css";
 
 import AppBar from "@mui/material/AppBar";
@@ -30,6 +34,9 @@ const settings = [
   { name: "Dashboard", link: "/" },
 ];
 
+// Back-End
+const LOGOUT_BACK = "/logout";
+
 const Navbar = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,6 +49,7 @@ const Navbar = ({ user }) => {
   }, []);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -61,6 +69,29 @@ const Navbar = ({ user }) => {
   const handleCloseUserMenu = (page) => {
     setAnchorElUser(null);
     navigate(page);
+  };
+
+  const handleLogout = async () => {
+    console.log("logout");
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${LOGOUT_BACK}`,
+        {},
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(res);
+      if (res.status === 204) {
+        window.localStorage.removeItem("id");
+        window.localStorage.removeItem("Name");
+        window.localStorage.removeItem("token");
+        dispatch(setUser({ name: "", _id: "" }));
+        // navigate("/");
+        window.location.reload();
+      }
+    } catch (error) {}
   };
 
   return (
@@ -128,7 +159,7 @@ const Navbar = ({ user }) => {
                       color: "white",
                     }}
                   >
-                    مرحبا {user}
+                    {user}
                   </Typography>
                 </IconButton>
               </Tooltip>
@@ -177,6 +208,7 @@ const Navbar = ({ user }) => {
                   sx={{
                     width: "100%",
                   }}
+                  onClick={() => handleLogout()}
                 >
                   <Typography
                     sx={{

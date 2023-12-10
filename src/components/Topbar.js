@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../redux/user_reducer";
 import { useNavigate } from "react-router-dom";
 import * as Action from "../redux/link_reducer";
 import axios from "axios";
@@ -9,7 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import imageName from "../img/person.png";
 
 function Topbar() {
-  const LOGOUT_URI_BACK = "/api/users/logout";
+  const LOGOUT_BACK = "/logout";
 
   const [open, setOpen] = useState(false);
 
@@ -37,11 +38,11 @@ function Topbar() {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    window.localStorage.setItem("link", JSON.stringify("الطلاب"));
+    window.localStorage.setItem("link", JSON.stringify("المتدربين"));
     window.localStorage.removeItem("Name");
     window.localStorage.removeItem("result");
     window.localStorage.removeItem("token");
-    dispatch(Action.setLink("الطلاب"));
+    dispatch(Action.setLink("المتدربين"));
     logoutUser();
   };
 
@@ -49,12 +50,20 @@ function Topbar() {
     console.log("logout");
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_SERVER_HOSTNAME}${LOGOUT_URI_BACK}`
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${LOGOUT_BACK}`,
+        {},
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
-
       console.log(res);
-
-      if (res.status === 200) {
+      if (res.status === 204) {
+        window.localStorage.removeItem("id");
+        window.localStorage.removeItem("Name");
+        window.localStorage.removeItem("token");
+        dispatch(setUser({ name: "", _id: "" }));
+        // window.location.reload();
         navigate("/");
       }
     } catch (error) {}

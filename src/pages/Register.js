@@ -126,14 +126,17 @@ export default function Register() {
 
         // Set Token In LocalStorage
 
-        window.localStorage.setItem("token", JSON.stringify(res.data.token));
+        window.localStorage.setItem(
+          "token",
+          JSON.stringify(res.data.RefreshToken)
+        );
 
         // Check User Role
         const role = res.data.roles;
         // console.log(role);
         if (role !== undefined) {
           navigate(homePage);
-          dispatch(setUser(res.data.user));
+          dispatch(setUser(res.data.foundUser));
         }
       } catch (error) {
         console.log(error);

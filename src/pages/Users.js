@@ -159,12 +159,12 @@ function Users() {
 
   useEffect(() => {
     // console.log("render");
-    if (options.length === 1) {
-      getYearsData();
-    }
-    if (rows.length === 1) {
-      getUsersData();
-    }
+    // if (options.length === 1) {
+    //   getYearsData();
+    // }
+    // if (rows.length === 1) {
+    //   getUsersData();
+    // }
   }, []);
 
   const handleSubmit = async (e) => {

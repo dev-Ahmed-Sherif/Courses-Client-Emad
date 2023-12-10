@@ -17,7 +17,7 @@ import QuizzesDashboard from "./pages/QuizzesDashboard";
 import AddQuiz from "./pages/Add-quiz";
 import AddQuestions from "./pages/add-questions";
 import AcademicSubject from "./pages/AcademicSubject";
-import AcademicYear from "./pages/AcademicYear";
+import AcademicYear from "./pages/Catogery";
 import QuizzesStudent from "./pages/QuizzesStudent";
 import Register from "./pages/Register";
 
@@ -100,7 +100,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/academic-years",
+    path: "/catogeries",
     element: (
       <CheckUserExist>
         <AcademicYear />

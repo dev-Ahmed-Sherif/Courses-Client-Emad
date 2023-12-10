@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { setUser } from "../redux/user_reducer";
 
 import FormInput from "../components/FormInput";
@@ -29,10 +29,11 @@ export default function Login() {
   });
 
   // Back-End
-  const QUIZ_URI_LOGIN_BACK = "/login";
+  const LOGIN_BACK = "/login";
 
   // Front-End
   const homePage = "/";
+  const adminPage = "/users-dashboard";
 
   // const userNameRef = useRef(null);
   const navigate = useNavigate();
@@ -70,7 +71,7 @@ export default function Login() {
     setErrorMsg({});
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_SERVER_HOSTNAME}${QUIZ_URI_LOGIN_BACK}`,
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${LOGIN_BACK}`,
         {
           email: email,
           pwd: password,
@@ -91,16 +92,23 @@ export default function Login() {
 
       // Set Token In LocalStorage
 
-      // window.localStorage.setItem("token", JSON.stringify(res.data));
+      window.localStorage.setItem(
+        "token",
+        JSON.stringify(res.data.newRefreshToken)
+      );
 
       // Check User Role
       const role = res.data.roles;
-      // console.log(role);
+      console.log(role);
 
-      if (role[0] === 777) {
-        dispatch(setUser(res.data.user));
-        window.localStorage.setItem("Name", JSON.stringify(res.data.user.name));
-        navigate();
+      if (role[0] === 7777 || role[0] === 777) {
+        dispatch(setUser(res.data.foundUser));
+        window.localStorage.setItem(
+          "Name",
+          JSON.stringify(res.data.foundUser.name)
+        );
+        window.localStorage.setItem("Role", JSON.stringify(role[0]));
+        navigate(adminPage);
       } else if (role[0] === 7 || role[0] === 77) {
         dispatch(setUser(res.data.foundUser));
         window.localStorage.setItem(

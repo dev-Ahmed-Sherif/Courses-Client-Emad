@@ -5,7 +5,7 @@ export const linkReducer = createSlice({
   initialState: {
     link: JSON.parse(window.localStorage.getItem("link"))
       ? JSON.parse(window.localStorage.getItem("link"))
-      : "الطلاب",
+      : "المتدربين",
   },
   reducers: {
     setLink: (state, action) => {

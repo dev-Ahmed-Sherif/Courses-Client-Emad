@@ -37,33 +37,33 @@ function Sidebar() {
         <ListItem
           position="sidebar"
           selectedLink={selectedLink}
-          linkText="الطلاب"
-          handleLinkClick={() => handleLinkClick("الطلاب")}
+          linkText="المتدربين"
+          handleLinkClick={() => handleLinkClick("المتدربين")}
           to="/users-dashboard"
           icon={<BsFillPersonFill />}
         />
         <ListItem
           position="sidebar"
           selectedLink={selectedLink}
-          linkText="الأختبارات"
-          handleLinkClick={() => handleLinkClick("الأختبارات")}
+          linkText="الدورات"
+          handleLinkClick={() => handleLinkClick("الدورات")}
           to="/quizzes-dashboard"
           icon={<SiTestcafe />}
         />
         <ListItem
           position="sidebar"
           selectedLink={selectedLink}
-          linkText="المواد الدراسية"
-          handleLinkClick={() => handleLinkClick("المواد الدراسية")}
+          linkText="البرامج التدريبية"
+          handleLinkClick={() => handleLinkClick("البرامج التدريبية")}
           to="/academic-subjects"
           icon={<MdPlayLesson />}
         />
         <ListItem
           position="sidebar"
           selectedLink={selectedLink}
-          linkText="العام الدراسى"
-          handleLinkClick={() => handleLinkClick("العام الدراسى")}
-          to="/academic-years"
+          linkText="المجالات"
+          handleLinkClick={() => handleLinkClick("المجالات")}
+          to="/catogeries"
           icon={<BsCalendarDate />}
         />
       </ul>
