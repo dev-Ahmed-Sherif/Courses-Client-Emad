@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import { FaPlus } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -46,11 +48,16 @@ function AcademicYear() {
     },
   ];
 
+  const [errorMsg, setErrorMsg] = useState({});
   const [search, setSearch] = useState("");
   const [newItem, setNewItem] = useState("");
   const [rows, setRows] = useState([{ _id: "", name: "" }]);
 
   const browToken = window.localStorage.getItem("token");
+
+  const { register, handleSubmit, formState } = useForm();
+
+  const { errors } = formState;
 
   useEffect(() => {
     if (rows.length === 1) {
@@ -66,14 +73,14 @@ function AcademicYear() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!newItem) return;
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (!newItem) return;
 
-    // addItem
-    addItem(newItem);
-    setNewItem("");
-  };
+  //   // addItem
+  //   addItem(newItem);
+  //   setNewItem("");
+  // };
 
   const getData = async () => {
     try {
@@ -90,6 +97,43 @@ function AcademicYear() {
       console.log(data.data);
       setRows([...data.data]);
       // console.log(rows);
+    } catch (error) {}
+  };
+
+  const onSubmit = async (data) => {
+    const { email, password } = data;
+    setErrorMsg({});
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${""}`,
+        {
+          email: email,
+          pwd: password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(res);
+
+      // Check res Message
+      if (res.data.messageEmail) {
+        setErrorMsg({ msgBackEmail: res.data.messageEmail });
+      } else if (res.data.messagePass) {
+        setErrorMsg({ msgBackPass: res.data.messagePass });
+      }
+
+      // Set Token In LocalStorage
+
+      window.localStorage.setItem(
+        "token",
+        JSON.stringify(res.data.newRefreshToken)
+      );
+
+      // Check User Role
+      const role = res.data.roles;
+      console.log(role);
     } catch (error) {}
   };
 
@@ -166,7 +210,7 @@ function AcademicYear() {
         <div className="content">
           <div className="operations">
             <div className="add-item">
-              <AddItem
+              {/* <AddItem
                 label={"إضافة مجال"}
                 placeholder={"المجال التدريبى"}
                 pattern={pattern}
@@ -174,7 +218,80 @@ function AcademicYear() {
                 setNewItem={setNewItem}
                 handleSubmit={handleSubmit}
                 onKeyPress={preventNumber}
-              />
+              /> */}
+              <form
+                id="form"
+                className="addForm"
+                onSubmit={handleSubmit(onSubmit)}
+              >
+                {/* {inputs.map((input) => (
+            <FormInput
+              key={input.id}
+              className="input"
+              {...input}
+              value={values[input.name]}
+              onChange={onChange}
+            />
+          ))} */}
+                <label
+                  style={{
+                    fontSize: "21px",
+                    fontWeight: "bold",
+                    color: "blue",
+                  }}
+                >
+                  {" "}
+                  إضافة مجال{" "}
+                </label>
+                <input
+                  id="cat"
+                  className="input"
+                  type="text"
+                  placeholder="المجال التدريبى"
+                  {...register("cat", {
+                    required: {
+                      value: true,
+                      message: "هذا الحقل مطلوب",
+                    },
+                  })}
+                />
+                <p>
+                  {errorMsg?.msgBackEmail !== undefined
+                    ? errorMsg?.msgBackEmail
+                    : errors.cat?.message}
+                </p>
+                <input
+                  id="file"
+                  className="input"
+                  type="file"
+                  placeholder="أرفق صورة"
+                  {...register("file", {
+                    required: {
+                      value: true,
+                      message: "هذا الحقل مطلوب",
+                    },
+                    validate: (value) => {
+                      const acceptedFormats = ["pdf", "jpg"];
+                      const fileExtension = value[0]?.name
+                        .split(".")
+                        .pop()
+                        .toLowerCase();
+                      if (!acceptedFormats.includes(fileExtension)) {
+                        return "Invalid file format. Only PDF files are allowed.";
+                      }
+                      return true;
+                    },
+                  })}
+                />
+                <p>
+                  {errorMsg?.msgBackPass !== undefined
+                    ? errorMsg?.msgBackPass
+                    : errors.file?.message}
+                </p>
+                <button type="submit">
+                  <FaPlus />
+                </button>
+              </form>
             </div>
             <SearchItem
               pattern={pattern}
