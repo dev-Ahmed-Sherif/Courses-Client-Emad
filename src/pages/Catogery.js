@@ -102,17 +102,14 @@ function AcademicYear() {
 
   const onSubmit = async (data) => {
     console.log(data);
-    console.log(data.file);
-
-    const { cat, password } = data;
+    // const { email, password } = data;
     setErrorMsg({});
+    const img = new FormData();
+    img.append("doc", data.file);
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${""}`,
-        {
-          name: cat,
-          image: password,
-        },
+        {},
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -243,8 +240,7 @@ function AcademicYear() {
                     color: "blue",
                   }}
                 >
-                  {" "}
-                  إضافة مجال{" "}
+                  إضافة مجال
                 </label>
                 <input
                   id="cat"
@@ -274,19 +270,19 @@ function AcademicYear() {
                       message: "هذا الحقل مطلوب",
                     },
                     validate: (value) => {
-                      const acceptedFormats = [
-                        "pdf",
-                        "jpg",
-                        "jpeg",
-                        "png",
-                        "gif",
-                      ];
+                      const acceptedFormats = ["jpg", "png", "gif", "jpeg"];
                       const fileExtension = value[0]?.name
                         .split(".")
                         .pop()
                         .toLowerCase();
+                      // console.log(value[0]?.size);
+                      // console.log(typeof value[0]?.size);
+                      // const size = value[0]?.size;
+                      // if (size < 5) {
+                      //   return "حجم الملف لا يجب ان يكون اكبر من 5 ميجا";
+                      // }
                       if (!acceptedFormats.includes(fileExtension)) {
-                        return "Invalid file format. Only PDF files are allowed.";
+                        return "نوع الملف يجب ان يكون صورة";
                       }
                       return true;
                     },
