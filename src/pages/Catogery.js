@@ -101,14 +101,17 @@ function AcademicYear() {
   };
 
   const onSubmit = async (data) => {
-    const { email, password } = data;
+    console.log(data);
+    console.log(data.file);
+
+    const { cat, password } = data;
     setErrorMsg({});
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${""}`,
         {
-          email: email,
-          pwd: password,
+          name: cat,
+          image: password,
         },
         {
           headers: { "Content-Type": "application/json" },
@@ -271,7 +274,13 @@ function AcademicYear() {
                       message: "هذا الحقل مطلوب",
                     },
                     validate: (value) => {
-                      const acceptedFormats = ["pdf", "jpg"];
+                      const acceptedFormats = [
+                        "pdf",
+                        "jpg",
+                        "jpeg",
+                        "png",
+                        "gif",
+                      ];
                       const fileExtension = value[0]?.name
                         .split(".")
                         .pop()
