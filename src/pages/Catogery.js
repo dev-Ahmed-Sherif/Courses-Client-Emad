@@ -102,14 +102,18 @@ function AcademicYear() {
 
   const onSubmit = async (data) => {
     console.log(data);
-    // const { email, password } = data;
+    console.log(data.file[0]);
+    const { cat, file } = data;
     setErrorMsg({});
     const img = new FormData();
     img.append("doc", data.file);
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${""}`,
-        {},
+        {
+          name: cat,
+          image: file[0],
+        },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
