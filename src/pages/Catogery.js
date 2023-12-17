@@ -16,7 +16,7 @@ import DataTable from "../components/DataTable";
 
 const pattern = `^[A-Za-z\u0600-\u06FF\\s]{3,30}$`;
 
-const ADD_URI_BACK = "/api/academic-year/create";
+const ADD_URI_BACK = "/catagory/add";
 const DELETE_URI_BACK = "/api/academic-year/delete";
 const GET_URI_BACK = "/api/academic-year";
 
@@ -104,41 +104,40 @@ function AcademicYear() {
     console.log(data);
     console.log(data.file[0]);
     const { cat, file } = data;
-    setErrorMsg({});
+    console.log(file);
+    console.log(file[0]);
+    // setErrorMsg({});
     const img = new FormData();
-    img.append("doc", data.file);
+    img.append(file[0].name, file[0]);
+    console.log(img);
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_SERVER_HOSTNAME}${""}`,
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${ADD_URI_BACK}`,
+
         {
           name: cat,
           image: file[0],
         },
         {
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "multipart/form-data" },
           withCredentials: true,
         }
       );
       console.log(res);
 
       // Check res Message
-      if (res.data.messageEmail) {
-        setErrorMsg({ msgBackEmail: res.data.messageEmail });
-      } else if (res.data.messagePass) {
-        setErrorMsg({ msgBackPass: res.data.messagePass });
+      if (res.status === 200) {
+        notfyAdd();
       }
-
-      // Set Token In LocalStorage
-
-      window.localStorage.setItem(
-        "token",
-        JSON.stringify(res.data.newRefreshToken)
-      );
 
       // Check User Role
       const role = res.data.roles;
       console.log(role);
-    } catch (error) {}
+    } catch (error) {
+      if (error) {
+        notfyWarning();
+      }
+    }
   };
 
   const addItem = async (item) => {
@@ -182,6 +181,19 @@ function AcademicYear() {
 
   const notfyAdd = () => {
     toast.info("👍👍👍 تم إضافة العام بنجاح", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const notfyWarning = () => {
+    toast.error("حدث خطأ أثناء الأضافة", {
       position: "top-left",
       autoClose: 5000,
       hideProgressBar: false,
