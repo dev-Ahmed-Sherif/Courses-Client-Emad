@@ -19,7 +19,8 @@ function Topbar() {
 
   let menuRef = useRef();
 
-  const name = useSelector((state) => state.user.userName);
+  let name = useSelector((state) => state.user.userName);
+  console.log(name);
 
   useEffect(() => {
     let handler = (e) => {
@@ -40,10 +41,12 @@ function Topbar() {
     e.preventDefault();
     window.localStorage.setItem("link", JSON.stringify("المتدربين"));
     window.localStorage.removeItem("Name");
-    window.localStorage.removeItem("result");
+    window.localStorage.removeItem("Role");
     window.localStorage.removeItem("token");
     dispatch(Action.setLink("المتدربين"));
     logoutUser();
+    console.log(name);
+    // navigate("/");
   };
 
   const logoutUser = async () => {
@@ -62,9 +65,10 @@ function Topbar() {
         window.localStorage.removeItem("id");
         window.localStorage.removeItem("Name");
         window.localStorage.removeItem("token");
-        dispatch(setUser({ name: "", _id: "" }));
-        // window.location.reload();
-        navigate("/");
+        window.localStorage.removeItem("Role");
+        // dispatch(setUser({ name: "", _id: "", role: "" }));
+        // navigate("/");
+        window.location.reload();
       }
     } catch (error) {}
   };

@@ -16,11 +16,12 @@ import DataTable from "../components/DataTable";
 
 const pattern = `^[A-Za-z\u0600-\u06FF\\s]{3,30}$`;
 
+const LOGOUT_BACK = "/logout";
 const ADD_URI_BACK = "/catagory/add";
 const DELETE_URI_BACK = "/api/academic-year/delete";
 const GET_URI_BACK = "/api/academic-year";
 
-function AcademicYear() {
+function Catogery() {
   const columns = [
     { field: "_id", headerName: "الرقم", width: 70 },
     { field: "name", headerName: "العام الدراسى", width: 200 },
@@ -53,7 +54,7 @@ function AcademicYear() {
   const [newItem, setNewItem] = useState("");
   const [rows, setRows] = useState([{ _id: "", name: "" }]);
 
-  const browToken = window.localStorage.getItem("token");
+  const browToken = JSON.parse(window.localStorage.getItem("token"));
 
   const { register, handleSubmit, formState } = useForm();
 
@@ -67,8 +68,11 @@ function AcademicYear() {
 
   // console.log(rows);
 
-  const preventNumber = (e) => {
-    if (/\d/.test(e.key)) {
+  const preventNotValid = (e) => {
+    if (
+      /\d/.test(e.key) ||
+      /[@!#%&?/,<>;:""=_`~.*+?^${}()|[\]\\]/g.test(e.key)
+    ) {
       e.preventDefault();
     }
   };
@@ -101,11 +105,11 @@ function AcademicYear() {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
-    console.log(data.file[0]);
+    // console.log(data);
+    // console.log(data.file[0]);
     const { cat, file } = data;
-    console.log(file);
-    console.log(file[0]);
+    // console.log(file);
+    // console.log(file[0]);
     // setErrorMsg({});
     const img = new FormData();
     img.append(file[0].name, file[0]);
@@ -113,12 +117,14 @@ function AcademicYear() {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${ADD_URI_BACK}`,
-
         {
+          token: browToken,
           name: cat,
           image: file[0],
         },
+
         {
+          data: { token: browToken },
           headers: { "Content-Type": "multipart/form-data" },
           withCredentials: true,
         }
@@ -135,29 +141,38 @@ function AcademicYear() {
       console.log(role);
     } catch (error) {
       if (error) {
-        notfyWarning();
+        console.log(error);
+        // console.log(error.response.status);
+        if (error.response?.status === 401) {
+          // console.log("warning");
+          // logoutUser();
+        } else {
+          notfyWarning();
+        }
       }
     }
   };
 
-  const addItem = async (item) => {
+  const logoutUser = async () => {
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_SERVER_HOSTNAME}${ADD_URI_BACK}`,
-        {
-          name: item,
-          token: browToken,
-        },
+        `${process.env.REACT_APP_SERVER_HOSTNAME}${LOGOUT_BACK}`,
+        {},
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
       console.log(res);
-
-      if (res.status === 200) {
-        notfyAdd();
-        setRows((prev) => [...prev, res.data.data]);
+      if (res.status === 204) {
+        window.localStorage.setItem("link", JSON.stringify("المتدربين"));
+        window.localStorage.removeItem("id");
+        window.localStorage.removeItem("Name");
+        window.localStorage.removeItem("token");
+        window.localStorage.removeItem("Role");
+        // dispatch(setUser({ name: "", _id: "", role: "" }));
+        // navigate("/");
+        window.location.reload();
       }
     } catch (error) {}
   };
@@ -180,7 +195,7 @@ function AcademicYear() {
   };
 
   const notfyAdd = () => {
-    toast.info("👍👍👍 تم إضافة العام بنجاح", {
+    toast.done("👍👍👍 تم الإضافة بنجاح", {
       position: "top-left",
       autoClose: 5000,
       hideProgressBar: false,
@@ -206,7 +221,7 @@ function AcademicYear() {
   };
 
   const notfyDelete = () => {
-    toast.info("👍👍👍 تم حذف العام بنجاح", {
+    toast.info("👍👍👍 تم الحذف بنجاح", {
       position: "top-left",
       autoClose: 5000,
       hideProgressBar: false,
@@ -269,6 +284,7 @@ function AcademicYear() {
                       message: "هذا الحقل مطلوب",
                     },
                   })}
+                  onKeyDown={preventNotValid}
                 />
                 <p>
                   {errorMsg?.msgBackEmail !== undefined
@@ -346,4 +362,4 @@ function AcademicYear() {
   );
 }
 
-export default AcademicYear;
+export default Catogery;

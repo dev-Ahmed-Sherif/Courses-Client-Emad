@@ -87,7 +87,8 @@ const Navbar = ({ user }) => {
         window.localStorage.removeItem("id");
         window.localStorage.removeItem("Name");
         window.localStorage.removeItem("token");
-        dispatch(setUser({ name: "", _id: "" }));
+        window.localStorage.removeItem("Role");
+        // dispatch(setUser({ name: "", _id: "" }));
         // navigate("/");
         window.location.reload();
       }
@@ -234,17 +235,22 @@ const Navbar = ({ user }) => {
                   p: 0,
                   display: { xs: "flex", md: "none" },
                   flexGrow: 1,
+                  width: "30%",
                 }}
               >
-                <Avatar alt="Remy Sharp" src="./logo.jfif" />
+                <Avatar
+                  alt="Remy Sharp"
+                  sx={{ marginRight: "70px" }}
+                  src="./logo.jfif"
+                />
               </IconButton>
             </Tooltip>
 
             <Box
               sx={{
                 //flexGrow: 1,
-                left: "0 !important",
-                right: "100px",
+                // left: "0 !important",
+                // right: "100px",
                 display: { xs: "flex", md: "none" },
               }}
             >
@@ -275,6 +281,8 @@ const Navbar = ({ user }) => {
                 sx={{
                   display: { xs: "block", md: "none" },
                   direction: "rtl",
+                  left: "-70px",
+                  right: "120px",
                 }}
               >
                 {pages.reverse().map((page) => (

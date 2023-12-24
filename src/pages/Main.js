@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../redux/user_reducer";
 
 import Navbar from "../components/Navbar";
 import AuthNav from "../components/AuthNav";
@@ -8,6 +9,14 @@ import HeroSection from "../components/HeroSection";
 import "../styles/Main.css";
 
 function Main() {
+  // useEffect(() => {
+  //   dispatch(setUser({ name: "", _id: "", role: "" }));
+  // }, []);
+
+  const dispatch = useDispatch();
+
+  // dispatch(setUser({ name: "", _id: "", role: "" }));
+
   const user = useSelector((state) => state.user);
   console.log(user);
 

@@ -9,15 +9,15 @@ export const userReducer = createSlice({
     userName: JSON.parse(window.localStorage.getItem("Name"))
       ? JSON.parse(window.localStorage.getItem("Name"))
       : "",
-    academicYear: JSON.parse(window.localStorage.getItem("academicYear"))
-      ? JSON.parse(window.localStorage.getItem("academicYear"))
+    role: JSON.parse(window.localStorage.getItem("Role"))
+      ? JSON.parse(window.localStorage.getItem("Role"))
       : "",
-    result: JSON.parse(window.localStorage.getItem("result"))
-      ? JSON.parse(window.localStorage.getItem("result"))
-      : [],
-    quizzesResult: JSON.parse(window.localStorage.getItem("quizzesResult"))
-      ? JSON.parse(window.localStorage.getItem("quizzesResult"))
-      : [],
+    // result: JSON.parse(window.localStorage.getItem("result"))
+    //   ? JSON.parse(window.localStorage.getItem("result"))
+    //   : [],
+    // quizzesResult: JSON.parse(window.localStorage.getItem("quizzesResult"))
+    //   ? JSON.parse(window.localStorage.getItem("quizzesResult"))
+    //   : [],
   },
   reducers: {
     setUser: (state, action) => {
@@ -26,8 +26,9 @@ export const userReducer = createSlice({
       // console.log(state.userName);
       state.userId = action.payload._id;
       state.userName = action.payload.name;
-      state.academicYear = action.payload.academicYearId;
-      state.quizzesResult = action.payload.result;
+      state.role = Object.values(action.payload.roles).filter(Boolean);
+      console.log(state.role);
+      // state.quizzesResult = action.payload.result;
       // console.log(state.userId);
       // console.log(state.userName);
     },

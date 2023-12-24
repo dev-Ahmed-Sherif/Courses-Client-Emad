@@ -24,8 +24,8 @@ export default function Login() {
     // Remove Local Storge
     window.localStorage.removeItem("id");
     window.localStorage.removeItem("Name");
-    window.localStorage.removeItem("academicYear");
-    window.localStorage.removeItem("quizzesResult");
+    window.localStorage.removeItem("Role");
+    window.localStorage.removeItem("token");
   });
 
   // Back-End
@@ -92,11 +92,6 @@ export default function Login() {
 
       // Set Token In LocalStorage
 
-      window.localStorage.setItem(
-        "token",
-        JSON.stringify(res.data.newRefreshToken)
-      );
-
       // Check User Role
       const role = res.data.roles;
       console.log(role);
@@ -108,6 +103,10 @@ export default function Login() {
           JSON.stringify(res.data.foundUser.name)
         );
         window.localStorage.setItem("Role", JSON.stringify(role[0]));
+        window.localStorage.setItem(
+          "token",
+          JSON.stringify(res.data.newRefreshToken)
+        );
         navigate(adminPage);
       } else if (role[0] === 7 || role[0] === 77) {
         dispatch(setUser(res.data.foundUser));
@@ -118,6 +117,11 @@ export default function Login() {
         window.localStorage.setItem(
           "Name",
           JSON.stringify(res.data.foundUser.name)
+        );
+        window.localStorage.setItem("Role", JSON.stringify(role[0]));
+        window.localStorage.setItem(
+          "token",
+          JSON.stringify(res.data.newRefreshToken)
         );
         navigate(homePage);
       }
