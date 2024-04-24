@@ -88,20 +88,26 @@ function Catogery() {
 
   const getData = async () => {
     try {
-      const { data } = await axios.post(
+      const res = await axios.post(
         `${process.env.REACT_APP_SERVER_HOSTNAME}${GET_URI_BACK}`,
-        {
-          token: browToken,
-        },
+        {},
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      console.log(data.data);
-      setRows([...data.data]);
+      // console.log(data.data);
+      // setRows([...data.data]);
       // console.log(rows);
-    } catch (error) {}
+    } catch (error) {
+      // console.log(error);
+      if (error.response?.status === 401) {
+        // console.log("warning");
+        // logoutUser();
+      } else {
+        notfyWarning();
+      }
+    }
   };
 
   const onSubmit = async (data) => {
