@@ -2,6 +2,7 @@
 
 import type { FC } from "react";
 import Link from "next/link";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -10,17 +11,14 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -39,7 +37,7 @@ const FormSchema = z.object({
   email: z
     .string()
     .min(1, { message: "Email is required" })
-    .email({ message: "Invalid email address" }),
+    .email({ message: "Invalid Email Address" }),
   password: z.string().min(1, { message: "Password is required" }),
 });
 
@@ -73,65 +71,56 @@ const Login: FC = () => {
 
   return (
     <div className="my-14 w-screen flex items-center justify-center">
-      <Card className="w-full max-w-sm">
+      <Card className="w-11/12 max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">مرحبا بك فى كورساتى</CardTitle>
-          <CardDescription>هيا لتكمل رحلتك العملية معنا</CardDescription>
+          <CardTitle className="flex items-center justify-center flex-col gap-2">
+            <p className="text-2xl">مرحبا بك فى كورساتى</p>
+            <p className="text-lg">هيا لتكمل رحلتك العملية معنا</p>
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <form
-            className="grid gap-4"
-            onSubmit={handleSubmit(onSubmit)}
-            noValidate
-          >
-            <div className="grid gap-4">
-              <Label className="font-bold" htmlFor="email">
-                البريد الألكترونى
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@gmail.com"
-                {...register("email")}
-              />
-              <p className="text-red-600">{errors.email?.message}</p>
-            </div>
-            <div className="grid gap-4">
-              <Label className="font-bold" htmlFor="password">
-                كلمة المرور
-              </Label>
-              <Input id="password" type="password" {...register("password")} />
-              <p className="text-red-600">{errors.password?.message}</p>
-            </div>
-            <Button className="w-full">تسجيل الدخول</Button>
-          </form>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="w-2/3 space-y-6"
+              className="w-full space-y-6"
             >
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>البريد الألكترونى</FormLabel>
                     <FormControl>
-                      <Input placeholder="shadcn" {...field} />
+                      <Input placeholder="m@gmail.com" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      This is your public display name.
-                    </FormDescription>
                     <FormMessage className="text-red-600" />
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem className="">
+                    <FormLabel>كلمة المرور</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage className="text-red-600" />
+                  </FormItem>
+                )}
+              />
+              <div className="w-full flex items-center justify-center">
+                <Button className="w-2/3" type="submit">
+                  تسجيل الدخول
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>
-        <CardFooter>
-          <Link href="/register" className="w-full">
+        <CardFooter className="w-full flex items-center justify-center gap-2 font-bold">
+          <p> لأول مرة هنا؟ </p>
+          <Link className="underline underline-offset-4" href="/register">
             إنشاء حساب
           </Link>
         </CardFooter>

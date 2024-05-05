@@ -37,7 +37,13 @@ const Navbar: FC = () => {
                 href="/"
                 className="hidden md:flex flex-row font-bold text-xl"
               >
-                <Image src="/logo.ico" width={35} height={35} alt="logo" />
+                <Image
+                  src="/logo.ico"
+                  className="rounded-full"
+                  width={40}
+                  height={40}
+                  alt="logo"
+                />
                 {/* <LogoIcon /> */}
                 {/* <span className="hidden md:block px-4">{title}</span> */}
               </Link>
@@ -62,7 +68,7 @@ const Navbar: FC = () => {
               <Input
                 type="search"
                 placeholder="بحث عن دورات"
-                className="sm:w-14 md:w-36 rounded-lg bg-background pl-3"
+                className="sm:w-14 md:w-36 lg:w-56 rounded-lg bg-background pl-3 font-bold"
               />
             </div>
           </div>
@@ -95,10 +101,10 @@ const Navbar: FC = () => {
             <div className="flex items-center justify-center">
               <Link href="/" className="font-bold text-base">
                 <Image
-                  className="rounded-lg"
+                  className="rounded-full"
                   src="/logo.ico"
-                  width={35}
-                  height={35}
+                  width={40}
+                  height={40}
                   alt="logo"
                 />
                 {/* <LogoIcon /> */}

@@ -6,113 +6,11 @@ import { LogoIcon } from "./Icons";
 
 const Footer: FC = () => {
   return (
-    <footer id="footer">
-      <hr className="w-11/12 mx-auto" />
+    <footer id="footer" className="pt-7 border-[2px] rounded-lg flex flex-col">
+      <hr className="w-10/12 pb-2 mx-auto font-bold" />
 
-      <section className="container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-12 gap-y-8">
-        <div className="col-span-full xl:col-span-2">
-          <Link href="/" className="font-bold text-xl flex">
-            <LogoIcon />
-            ShadcnUI/React
-          </Link>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">Follow US</h3>
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Github
-            </Link>
-          </div>
-
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Twitter
-            </Link>
-          </div>
-
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Dribbble
-            </Link>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">Platforms</h3>
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Web
-            </Link>
-          </div>
-
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Mobile
-            </Link>
-          </div>
-
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Desktop
-            </Link>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">About</h3>
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Features
-            </Link>
-          </div>
-
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Pricing
-            </Link>
-          </div>
-
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              FAQ
-            </Link>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <h3 className="font-bold text-lg">Community</h3>
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Youtube
-            </Link>
-          </div>
-
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Discord
-            </Link>
-          </div>
-
-          <div>
-            <Link href="#" className="opacity-60 hover:opacity-100">
-              Twitch
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="container pb-14 text-center">
-        <h3>
-          &copy; 2024 Landing page made by{" "}
-          <Link
-            target="_blank"
-            href="https://github.com/fredygerman"
-            className="text-primary transition-all border-primary hover:border-b-2"
-          >
-            Fredy German
-          </Link>
-        </h3>
+      <section className="container pb-7 text-center">
+        <h2 className="font-bold">&copy; جميع الحقوق محفوظة كورساتى </h2>
       </section>
     </footer>
   );
