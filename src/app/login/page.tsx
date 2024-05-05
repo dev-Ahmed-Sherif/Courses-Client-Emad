@@ -36,9 +36,9 @@ const FormSchema = z.object({
   // username: z.string().nonempty("Username is required"),
   email: z
     .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Invalid Email Address" }),
-  password: z.string().min(1, { message: "Password is required" }),
+    .min(1, { message: "الإيميل مطلوب" })
+    .email({ message: "الإيميل غير صالح" }),
+  password: z.string().min(1, { message: "كلمة المرور مطلوبة" }),
 });
 
 const Login: FC = () => {
@@ -89,7 +89,7 @@ const Login: FC = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>البريد الألكترونى</FormLabel>
+                    <FormLabel className="font-bold">البريد الألكترونى</FormLabel>
                     <FormControl>
                       <Input placeholder="m@gmail.com" {...field} />
                     </FormControl>
@@ -102,7 +102,7 @@ const Login: FC = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem className="">
-                    <FormLabel>كلمة المرور</FormLabel>
+                    <FormLabel className="font-bold">كلمة المرور</FormLabel>
                     <FormControl>
                       <Input type="password" {...field} />
                     </FormControl>
